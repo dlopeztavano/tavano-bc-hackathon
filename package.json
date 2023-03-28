@@ -1,18 +1,18 @@
 {
-    "name": "basic-express-server",
-    "version": "1.0.0",
-    "description": "Basic Express Server",
-    "main": "app.js",
-    "author": "Tavano",
-    "license": "MIT",
-    "private": false,
-    "scripts": {
-      "start": "node app.js"
-    },
-    "dependencies": {
-      "express": "^4.18.2"
-    },
-    "engines": {
-      "node": ">=14"
-    }
+  "name": "basic-express-server",
+  "version": "1.0.0",
+  "description": "Basic Express Server",
+  "main": "app.js",
+  "author": "Tavano",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "engines": {
+    "node": ">=14"
   }
+}
