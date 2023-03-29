@@ -1,7 +1,8 @@
 const express = require('express');
 const app = express()
+const cors = require('cors');
 
-const port = process.env.PORT || 3001;
+const port = 4001;
 
 const STRIPE_PUBLIC = "pk_test_51MAP0LLQ2msoaAhmasLqBgDb87E7cbXk61TpYqAjAbVYwHZIaWT0ipOt5XiRXHpWZa61KdmneSuUKufNUgiQFM7Z00GBBBeZn6";
 const STRIPE_SECRET = "sk_test_51MAP0LLQ2msoaAhmrtJzxFfhFsxXlWdvwc3vPozR4iKU5CYwevu7T4342O7RLzRbp1ejbr8Qg07zrD5OsNxW79z900Knbye3Qu";
@@ -38,7 +39,9 @@ function priceToCents(price) {
 }
 
 
-
+app.use(cors({
+  origin: 'http://localhost:3000'
+}));
 
 /**
  * Adding main request to get stripe session element
