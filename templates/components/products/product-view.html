@@ -97,6 +97,7 @@
     <section class="productView-details product-data">
         <div class="productView-product">
             <h1 class="productView-title">{{product.title}}</h1>
+            <button type="button" id="instant-checkout-button">Stripe Checkout</button>
             {{#if product.brand}}
                 <h2 class="productView-brand">
                     <a href="{{product.brand.url}}"><span>{{product.brand.name}}</span></a>
