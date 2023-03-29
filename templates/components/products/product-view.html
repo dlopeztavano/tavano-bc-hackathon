@@ -97,7 +97,9 @@
     <section class="productView-details product-data">
         <div class="productView-product">
             <h1 class="productView-title">{{product.title}}</h1>
-            <button type="button" id="instant-checkout-button">Stripe Checkout</button>
+            <button id="payment-request-button" onclick="redirectToStripe()">
+                Stripe
+            </button>
             {{#if product.brand}}
                 <h2 class="productView-brand">
                     <a href="{{product.brand.url}}"><span>{{product.brand.name}}</span></a>
@@ -278,3 +280,19 @@
     <div class="modal-content"></div>
     <div class="loadingOverlay"></div>
 </div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+
+<script>
+
+    function redirectToStripe(){
+        jQuery.ajax({url: "http://localhost:4001/", success: function(result){
+            location.href = result.url
+        }});
+    }
+
+
+ 
+</script>
