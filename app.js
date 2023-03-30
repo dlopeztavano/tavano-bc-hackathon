@@ -168,7 +168,7 @@ app.post('/createPickupOptions', (req, res) => {
   let url = `${BC_ENDPOINT}pickup/options`
 
   console.log(JSON.stringify(req.body));
-  
+
   let options = {
       method: 'post',
       headers: {
@@ -191,10 +191,9 @@ app.post('/createPickupOptions', (req, res) => {
       if(responseObject && responseObject.results && (responseObject.results.length > 0) && responseObject.results[0].pickup_options){
         console.log('There are results & pickup_options');
         res.end(JSON.stringify(responseObject.results[0].pickup_options));
+      }else{
+        res.end(responseText);
       }
-
-      res.end(responseText);
-
     }
 
     createPickupOptions(req, res);
