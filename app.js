@@ -181,10 +181,18 @@ app.post('/createPickupOptions', (req, res) => {
     async function createPickupOptions() {
       
       const response = await fetch(url, options);
-      const responseText = await response.text();
-      console.log(responseText);
 
-      res.status(200).json(responseText);
+      let responseText = await response.text();
+      let responseObject = JSON.parse(responseText);
+
+      res.setHeader('Content-Type', 'application/json');
+
+      if(responseObject && responseObject.results && (responseObject.results.length > 0) && responseObject.results[0].pickup_options){
+        console.log('There are results & pickup_options');
+        res.end(JSON.stringify(responseObject.results[0].pickup_options));
+      }
+
+      res.end(responseText);
 
     }
 
