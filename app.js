@@ -5,6 +5,7 @@ const fetch = require('node-fetch');
 
 const bodyParser = require('body-parser');
 
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 
 const port = 4001;
