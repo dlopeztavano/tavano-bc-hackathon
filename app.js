@@ -3,6 +3,10 @@ const app = express()
 const cors = require('cors');
 const fetch = require('node-fetch');
 
+const bodyParser = require('body-parser');
+
+app.use(bodyParser.json());
+
 const port = 4001;
 
 const STRIPE_PUBLIC = "pk_test_51MAP0LLQ2msoaAhmasLqBgDb87E7cbXk61TpYqAjAbVYwHZIaWT0ipOt5XiRXHpWZa61KdmneSuUKufNUgiQFM7Z00GBBBeZn6";
@@ -151,6 +155,46 @@ app.get('/', (req, res) => {
   buildStripeSession(req,res)
   
 });
+
+
+/********************************* BigCommerce Middleware  ***************************/
+
+
+app.post('/createPickupOptions', (req, res) => {  
+  
+  
+  console.log('create pickup options endpoint');
+
+  let url = `${BC_ENDPOINT}pickup/options`
+
+
+  let options = {
+      method: 'post',
+      headers: {
+        'accept': "application/json",
+        'Content-Type': 'application/json',
+        'X-Auth-Token': BC_X_AUTH_TOKEN
+      },
+      body: JSON.stringify(req.body)
+    };
+  
+    async function createPickupOptions() {
+      
+      const response = await fetch(url, options);
+      const responseText = await response.text();
+      console.log(responseText);
+
+      res.status(200).json(responseText);
+
+    }
+
+    createPickupOptions(req, res);
+  
+});
+
+
+/********************************* BigCommerce Middleware  ***************************/
+
 
 
 app.listen(port, () => {
