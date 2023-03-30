@@ -167,7 +167,8 @@ app.post('/createPickupOptions', (req, res) => {
 
   let url = `${BC_ENDPOINT}pickup/options`
 
-
+  console.log(JSON.stringify(req.body));
+  
   let options = {
       method: 'post',
       headers: {
@@ -178,7 +179,7 @@ app.post('/createPickupOptions', (req, res) => {
       body: JSON.stringify(req.body)
     };
   
-    async function createPickupOptions() {
+    async function createPickupOptions(req, res) {
       
       const response = await fetch(url, options);
 
