@@ -314,7 +314,8 @@ async function buildStripeSession(req,res){
 
 
 app.use(cors({
-  origin: 'http://localhost:3000'
+  
+  origin: ["http://localhost:3000","https://sinbi-store.mybigcommerce.com/"]
 }));
 
 /**
