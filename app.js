@@ -170,10 +170,11 @@ async function buildOrderInBc(checkout_session_completed)
   for (var i = 0 ; i < fullCheckoutSession.line_items.data.length; i++){
 
     consignments.pickups[0].line_items.push({
-      name:fullCheckoutSession.line_items.data[i].description,
+      product_id:productId,
+      // name:fullCheckoutSession.line_items.data[i].description,
       quantity: fullCheckoutSession.line_items.data[i].quantity,
-      price_inc_tax: fullCheckoutSession.line_items.data[i].price.unit_amount,
-      price_ex_tax: fullCheckoutSession.line_items.data[i].price.unit_amount,
+      // price_inc_tax: fullCheckoutSession.line_items.data[i].price.unit_amount,
+      // price_ex_tax: fullCheckoutSession.line_items.data[i].price.unit_amount,
     })
   }
 
