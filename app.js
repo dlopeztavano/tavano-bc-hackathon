@@ -66,7 +66,7 @@ async function buildOrderInBc(checkout_session_completed)
 
   console.log("flag1");
 
-  var locationId = checkout_session_completed.metadata.locationId || 2;
+  var locationId = parseInt(checkout_session_completed.metadata.locationId || 2);
 
   var customerId = checkout_session_completed.metadata.customerId || 107 ;
 
@@ -207,7 +207,7 @@ async function buildOrderInBc(checkout_session_completed)
 
   console.log("bcOrderBody");
   console.log(JSON.stringify(bcOrderBody));
-  
+
   // fetch(BC_ENDPOINT_V2 + "orders",options).then(res=>res.json()).catch(err=>console.log("error:" + err))
   var orderInBc = await fetch(BC_ENDPOINT_V2 + "orders", options)
         .then(res => res.json())
