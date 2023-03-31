@@ -64,6 +64,8 @@ async function createStripeCustomer(){
 async function buildOrderInBc(checkout_session_completed)
 {
 
+  console.log("flag1");
+
   var locationId = checkout_session_completed.metadata.locationId || 2;
 
   var customerId = checkout_session_completed.metadata.customerId || 107 ;
@@ -75,7 +77,7 @@ async function buildOrderInBc(checkout_session_completed)
   
 
   
-
+  console.log("flag2");
 
   // Building some default billing just for local hooks triggers
   var defaultBillingAddress = {
@@ -112,7 +114,7 @@ async function buildOrderInBc(checkout_session_completed)
     billing_address = defaultBillingAddress
   }
   
-
+  console.log("flag3");
   
 
   var consignments = {
@@ -143,7 +145,7 @@ async function buildOrderInBc(checkout_session_completed)
   // Retrieving location Data from the backend
   var locationObject = await getLocationByIdFromBc(locationId);
 
-  
+  console.log("flag4");
 
   if (locationObject && locationObject.data && locationObject.data.length > 0 ){
 
@@ -201,10 +203,13 @@ async function buildOrderInBc(checkout_session_completed)
   }
 
   // fetch(BC_ENDPOINT_V2 + "orders",options).then(res=>res.json()).catch(err=>console.log("error:" + err))
-  fetch(BC_ENDPOINT_V2 + "orders", options)
+  var orderInBc = await fetch(BC_ENDPOINT_V2 + "orders", options)
         .then(res => res.json())
         .then(json => console.log(json))
         .catch(err => console.error('error:' + err));
+
+  console.log("orderInBc");
+  console.log(JSON.stringify(orderInBc))
     
   
 }
@@ -293,6 +298,9 @@ async function buildStripeSession(req,res){
   var locationId = req.query.locationId || 2;
   var customerId = req.query.customerId || 107;
 
+
+  locationId = parseInt(locationId);
+
   if (productId){
 
     var product;
@@ -315,7 +323,7 @@ async function buildStripeSession(req,res){
 
 app.use(cors({
   
-  origin: ["http://localhost:3000","https://sinbi-store.mybigcommerce.com/"]
+  origin: ["http://localhost:3000","https://sinbi-store.mybigcommerce.com"]
 }));
 
 /**
@@ -346,7 +354,7 @@ app.post('/stripe_webhooks', express.json({type: 'application/json'}), (request,
   }
 
   // Return a response to acknowledge receipt of the event
-  response.json({received: true});
+  response.json({received_v2: true});
 });
 
 
