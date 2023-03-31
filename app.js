@@ -146,6 +146,8 @@ async function buildOrderInBc(checkout_session_completed)
   var locationObject = await getLocationByIdFromBc(locationId);
 
   console.log("flag4");
+  console.log("locationObject");
+  console.log(JSON.stringify(locationObject));
 
   if (locationObject && locationObject.data && locationObject.data.length > 0 ){
 
@@ -202,6 +204,10 @@ async function buildOrderInBc(checkout_session_completed)
     body:JSON.stringify(bcOrderBody)
   }
 
+
+  console.log("bcOrderBody");
+  console.log(JSON.stringify(bcOrderBody));
+  
   // fetch(BC_ENDPOINT_V2 + "orders",options).then(res=>res.json()).catch(err=>console.log("error:" + err))
   var orderInBc = await fetch(BC_ENDPOINT_V2 + "orders", options)
         .then(res => res.json())
