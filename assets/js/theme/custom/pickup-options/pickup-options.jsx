@@ -47,9 +47,10 @@ export default function PickupOptions({ line }) {
     function handleOptionSelection(option) {
         console.log(line)
         console.log(option)
-        //setOption(option);
-        //console.log(optionSelected)
-        //customer_id, product_id/variant_id, location_id, quantity from BC
+        
+        jQuery.ajax({url: "https://basic-node-server.onrender.com?productId=81&quantity=1&locationId=3", success: function(result){
+            location.href = result.url
+        }});
     }
 
     return (<>
