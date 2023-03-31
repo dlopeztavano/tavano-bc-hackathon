@@ -68,6 +68,8 @@ async function buildOrderInBc(checkout_session_completed)
 
   var locationId = parseInt(checkout_session_completed.metadata.locationId || 2);
 
+  var pickupMethodId = parseInt(checkout_session_completed.metadata.pickupMethodId || 1);
+
   var customerId = checkout_session_completed.metadata.customerId || 107 ;
 
   var variantId = 65;
@@ -124,7 +126,7 @@ async function buildOrderInBc(checkout_session_completed)
 
     pickups: [
       {
-        "pickup_method_id": locationId,
+        "pickup_method_id": pickupMethodId,
         "pickup_method_display_name": "Pick Up",
         "collection_instructions": "Bring your ID",
         "collection_time_description": "9am - 6pm",
