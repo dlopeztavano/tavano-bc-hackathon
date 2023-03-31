@@ -95,6 +95,7 @@ async function buildOrderInBc(checkout_session_completed)
   }
 
   
+  
   var billing_address;
 
   if (checkout_session_completed && checkout_session_completed.customer_details ){
@@ -102,13 +103,13 @@ async function buildOrderInBc(checkout_session_completed)
     billing_address = {
       "first_name":checkout_session_completed.customer_details.name || checkout_session_completed.customer_details.email,
       "last_name":checkout_session_completed.customer_details.name || checkout_session_completed.customer_details.email,
-      "street_1":checkout_session_completed.customer_details.line1 || " ",
+      "street_1":checkout_session_completed.customer_details.address.line1 || " ",
       "city":checkout_session_completed.customer_details.address.city || " ",
-      "state":checkout_session_completed.customer_details.address.state|| " ",
+      "state":"Florida",
       "zip":checkout_session_completed.customer_details.address.postal_code || " ",
       "country": "United States",
       "country_iso2":"US",
-      "email":checkout_session_completed.customer_details.email|| "mlugli@tavanoteam.com",
+      "email":checkout_session_completed.customer_details.email || "somedefault@tavanoteam.com",
   }
 
   }else
