@@ -2,8 +2,13 @@ const express = require('express');
 const app = express()
 const cors = require('cors');
 const fetch = require('node-fetch');
+const bodyParser = require('body-parser');
 
-const port = 4001;
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json());
+
+
+const port = 3000;
 
 const STRIPE_PUBLIC = "pk_test_51MAP0LLQ2msoaAhmasLqBgDb87E7cbXk61TpYqAjAbVYwHZIaWT0ipOt5XiRXHpWZa61KdmneSuUKufNUgiQFM7Z00GBBBeZn6";
 const STRIPE_SECRET = "sk_test_51MAP0LLQ2msoaAhmrtJzxFfhFsxXlWdvwc3vPozR4iKU5CYwevu7T4342O7RLzRbp1ejbr8Qg07zrD5OsNxW79z900Knbye3Qu";
@@ -338,6 +343,55 @@ app.post('/stripe_webhooks', express.json({type: 'application/json'}), (request,
   // Return a response to acknowledge receipt of the event
   response.json({received: true});
 });
+
+
+/********************************* BigCommerce Middleware  ***************************/
+
+
+app.post('/createPickupOptions', (req, res) => {  
+  
+  
+  console.log('create pickup options endpoint');
+
+  let url = `${BC_ENDPOINT}pickup/options`
+
+  console.log(JSON.stringify(req.body));
+
+  let options = {
+      method: 'post',
+      headers: {
+        'accept': "application/json",
+        'Content-Type': 'application/json',
+        'X-Auth-Token': BC_X_AUTH_TOKEN
+      },
+      body: JSON.stringify(req.body)
+    };
+  
+    async function createPickupOptions(req, res) {
+      
+      const response = await fetch(url, options);
+
+      let responseText = await response.text();
+      let responseObject = JSON.parse(responseText);
+
+      res.setHeader('Content-Type', 'application/json');
+
+      if(responseObject && responseObject.results && (responseObject.results.length > 0) && responseObject.results[0].pickup_options){
+        console.log('There are results & pickup_options');
+        //res.end(JSON.stringify(responseObject.results[0].pickup_options));
+        res.status(200).json(responseObject.results[0].pickup_options);
+      }else{
+        //res.end(responseText);
+        res.status(200).json(responseText);
+      }
+    }
+
+    createPickupOptions(req, res);
+  
+});
+
+
+/********************************* BigCommerce Middleware  ***************************/
 
 
 app.listen(port, () => {
