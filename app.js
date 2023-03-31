@@ -64,7 +64,7 @@ async function createStripeCustomer(){
 async function buildOrderInBc(checkout_session_completed)
 {
 
-  var locationId = checkout_session_completed.metadata.locationId || 1;
+  var locationId = checkout_session_completed.metadata.locationId || 2;
 
   var customerId = checkout_session_completed.metadata.customerId ;
 
@@ -93,7 +93,7 @@ async function buildOrderInBc(checkout_session_completed)
   
   var billing_address;
 
-  if (checkout_session_completed && checkout_session_completed.customer_details ){
+  if (checkout_session_completed && checkout_session_completed.customer_details && false ){
 
     billing_address = {
       "first_name":checkout_session_completed.customer_details.name || checkout_session_completed.customer_details.email,
@@ -142,6 +142,8 @@ async function buildOrderInBc(checkout_session_completed)
 
   // Retrieving location Data from the backend
   var locationObject = await getLocationByIdFromBc(locationId);
+
+  
 
   if (locationObject && locationObject.data && locationObject.data.length > 0 ){
 
@@ -262,9 +264,9 @@ async function getStripeCheckoutSession(productId,qty,locationId,customerId){
   await stripe.checkout.sessions.create({
     success_url: 'https://example.com/success',
     line_items: [
-      {price: 'price_1MrVWcLQ2msoaAhmGSx1XnJ2', quantity: qty},
+      {price: 'price_1MrnK0LQ2msoaAhmqlUmdn0s', quantity: qty},
     ],
-    customer:"cus_NcMG1OPnXtziQs",
+    // customer:"cus_NcMG1OPnXtziQs",
     mode: 'payment',
     metadata:{
       "locationId":locationId,
@@ -284,7 +286,7 @@ async function getStripeCheckoutSession(productId,qty,locationId,customerId){
 
 async function buildStripeSession(req,res){
 
-  var productId = req.query.productId;
+  var productId = req.query.productId || 81;
   var qty = req.query.qty || 1;
   var locationId = req.query.locationId;
   var customerId = req.query.customerId;
