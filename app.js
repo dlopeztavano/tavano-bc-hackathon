@@ -40,7 +40,7 @@ async function buildOrderInBc(checkout_session_completed)
 
   // var fullCheckoutSession = await getFullCheckoutSessionDataFromStripe();
 
-  var fullPaymentIntent = await getFullPaymentIntent(fullCheckoutSession.payment_intent);
+  // var fullPaymentIntent = await getFullPaymentIntent(fullCheckoutSession.payment_intent);
 
 
   // Building some default billing just for local hooks triggers
