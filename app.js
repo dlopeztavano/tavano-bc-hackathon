@@ -15,6 +15,31 @@ const BC_X_AUTH_TOKEN = "1cu5yh64whtm35j1yihzobmz0yarhar";
 
 const stripe = require('stripe')(STRIPE_SECRET);
 
+
+async function getLocationByIdFromBc(locationId){
+
+  var location ;
+  let url = BC_ENDPOINT + "inventory/locations?location_id:in="+locationId ;
+
+  let options = {
+      method: 'get',
+      headers: {'accept': "application/json",'Content-Type': 'application/json', 'X-Auth-Token': BC_X_AUTH_TOKEN},
+    };
+    
+    await fetch(url, options)
+      .then(res => {
+        
+        location = res.json(); 
+        return res.json()
+        
+      })
+      .then(json => console.log(json))
+      .catch(err => console.error('error:' + err));
+
+      return location
+
+}
+
 async function createStripeCustomer(){
   
   var customer ;
@@ -36,9 +61,13 @@ async function buildOrderInBc(checkout_session_completed)
 
   var locationId = checkout_session_completed.metadata.locationId || 1;
 
-  var customerId = checkout_session_completed.metadata.customerId;
+  var customerId = checkout_session_completed.metadata.customerId ;
 
   var fullCheckoutSession = await getFullCheckoutSessionDataFromStripe();
+
+  
+
+
 
   // var fullPaymentIntent = await getFullPaymentIntent(fullCheckoutSession.payment_intent);
 
@@ -57,23 +86,20 @@ async function buildOrderInBc(checkout_session_completed)
   }
 
   
-  console.log("checkout_session_completed.customer_details")
-  console.log(checkout_session_completed.customer_details)
-
   var billing_address;
 
-  if (checkout_session_completed && checkout_session_completed.customer_details && false){
+  if (checkout_session_completed && checkout_session_completed.customer_details ){
 
     billing_address = {
-      "first_name":checkout_session_completed.customer_details.name,
-      "last_name":checkout_session_completed.customer_details.name,
-      "street_1":checkout_session_completed.customer_details.line1,
-      "city":checkout_session_completed.customer_details.address.city,
-      "state":checkout_session_completed.customer_details.address.state,
-      "zip":checkout_session_completed.customer_details.address.postal_code,
-      "country":checkout_session_completed.customer_details.address.country,
-      "country_iso2":checkout_session_completed.customer_details.address.country,
-      "email":checkout_session_completed.customer_details.email,
+      "first_name":checkout_session_completed.customer_details.name || checkout_session_completed.customer_details.email,
+      "last_name":checkout_session_completed.customer_details.name || checkout_session_completed.customer_details.email,
+      "street_1":checkout_session_completed.customer_details.line1 || " ",
+      "city":checkout_session_completed.customer_details.address.city || " ",
+      "state":checkout_session_completed.customer_details.address.state|| " ",
+      "zip":checkout_session_completed.customer_details.address.postal_code || " ",
+      "country":checkout_session_completed.customer_details.address.country|| "United States",
+      "country_iso2":checkout_session_completed.customer_details.address.country|| "US",
+      "email":checkout_session_completed.customer_details.email|| " ",
   }
 
   }else
@@ -81,6 +107,7 @@ async function buildOrderInBc(checkout_session_completed)
     billing_address = defaultBillingAddress
   }
   
+
   
 
   var consignments = {
@@ -88,9 +115,9 @@ async function buildOrderInBc(checkout_session_completed)
     pickups: [
       {
         "pickup_method_id": locationId,
-        "pickup_method_display_name": "Pick Up - override",
-        "collection_instructions": "Bring your ID - override",
-        "collection_time_description": "9am - 6pm - override",
+        "pickup_method_display_name": "Pick Up",
+        "collection_instructions": "Bring your ID",
+        "collection_time_description": "9am - 6pm",
         "location": {
           "name": "Location 1 - override",
           "code": "LOCATION-1 - override",
@@ -100,12 +127,32 @@ async function buildOrderInBc(checkout_session_completed)
           "state": "Texas - override",
           "postal_code": "78726 - override",
           "country_alpha2": "US",
-          "email": "location1@example.com - override",
+          "email": "location1@example.com",
           "phone": "+1 111-111-1111 - override"
         },
         "line_items": []
       }
     ]
+  }
+
+  // Retrieving location Data from the backend
+  var locationObject = await getLocationByIdFromBc(locationId);
+
+  if (locationObject && locationObject.data && locationObject.data.length > 0 ){
+
+    
+
+    consignments.pickups[0].location.name = locationObject.data[0].label;
+    consignments.pickups[0].location.address_line_1 = locationObject.data[0].address.address1;
+    consignments.pickups[0].location.address_line_2 = locationObject.data[0].address.address2;
+    consignments.pickups[0].location.city = locationObject.data[0].address.city;
+    consignments.pickups[0].location.state = locationObject.data[0].address.state;
+    consignments.pickups[0].location.postal_code = locationObject.data[0].address.zip;
+    consignments.pickups[0].location.phone = locationObject.data[0].address.phone;
+    consignments.pickups[0].location.code = locationObject.data[0].code;
+
+
+
   }
   
 
