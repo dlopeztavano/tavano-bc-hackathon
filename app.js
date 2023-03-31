@@ -38,7 +38,7 @@ async function buildOrderInBc(checkout_session_completed)
 
   var customerId = checkout_session_completed.metadata.customerId;
 
-  // var fullCheckoutSession = await getFullCheckoutSessionDataFromStripe();
+  var fullCheckoutSession = await getFullCheckoutSessionDataFromStripe();
 
   // var fullPaymentIntent = await getFullPaymentIntent(fullCheckoutSession.payment_intent);
 
@@ -57,22 +57,23 @@ async function buildOrderInBc(checkout_session_completed)
   }
 
   
-  
+  console.log("checkout_session_completed.customer_details")
+  console.log(checkout_session_completed.customer_details)
 
   var billing_address;
 
-  if (fullCheckoutSession && fullCheckoutSession.customer_details){
+  if (checkout_session_completed && checkout_session_completed.customer_details && false){
 
     billing_address = {
-      "first_name":fullCheckoutSession.customer_details.name,
-      "last_name":fullCheckoutSession.customer_details.name,
-      "street_1":fullCheckoutSession.customer_details.line1,
-      "city":fullCheckoutSession.customer_details.address.city,
-      "state":fullCheckoutSession.customer_details.address.state,
-      "zip":fullCheckoutSession.customer_details.address.postal_code,
-      "country":fullCheckoutSession.customer_details.address.country,
-      "country_iso2":fullCheckoutSession.customer_details.address.country,
-      "email":fullCheckoutSession.customer_details.email,
+      "first_name":checkout_session_completed.customer_details.name,
+      "last_name":checkout_session_completed.customer_details.name,
+      "street_1":checkout_session_completed.customer_details.line1,
+      "city":checkout_session_completed.customer_details.address.city,
+      "state":checkout_session_completed.customer_details.address.state,
+      "zip":checkout_session_completed.customer_details.address.postal_code,
+      "country":checkout_session_completed.customer_details.address.country,
+      "country_iso2":checkout_session_completed.customer_details.address.country,
+      "email":checkout_session_completed.customer_details.email,
   }
 
   }else
