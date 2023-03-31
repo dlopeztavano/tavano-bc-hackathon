@@ -104,9 +104,9 @@ async function buildOrderInBc(checkout_session_completed)
       "city":checkout_session_completed.customer_details.address.city || " ",
       "state":checkout_session_completed.customer_details.address.state|| " ",
       "zip":checkout_session_completed.customer_details.address.postal_code || " ",
-      "country":checkout_session_completed.customer_details.address.country|| "United States",
-      "country_iso2":checkout_session_completed.customer_details.address.country|| "US",
-      "email":checkout_session_completed.customer_details.email|| " ",
+      "country": "United States",
+      "country_iso2":"US",
+      "email":checkout_session_completed.customer_details.email|| "mlugli@tavanoteam.com",
   }
 
   }else
