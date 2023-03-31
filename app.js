@@ -70,7 +70,9 @@ async function buildOrderInBc(checkout_session_completed)
 
   var customerId = checkout_session_completed.metadata.customerId || 107 ;
 
-  var productId = parseInt(checkout_session_completed.metadata.customerId || 81);
+  var variantId = 65;
+
+  var productId = 81;
 
   var fullCheckoutSession = await getFullCheckoutSessionDataFromStripe(checkout_session_completed.id);
 
@@ -174,7 +176,8 @@ async function buildOrderInBc(checkout_session_completed)
   for (var i = 0 ; i < fullCheckoutSession.line_items.data.length; i++){
 
     consignments.pickups[0].line_items.push({
-      product_id:65,
+      product_id:productId,
+      variant_id:variantId,
       // name:fullCheckoutSession.line_items.data[i].description,
       quantity: fullCheckoutSession.line_items.data[i].quantity,
       // price_inc_tax: fullCheckoutSession.line_items.data[i].price.unit_amount,
