@@ -131,16 +131,21 @@ export default class ProductDetails extends ProductDetailsBase {
                     self.lng = position.coords.longitude; 
                     
                     const productId = parseInt($('[name="product_id"]', $form).val());
-                    utils.api.productAttributes.optionChange(productId, $form.serialize(), '', (err, response) => {
-                         const variantId = response.data.v3_variant_id; 
-                        //Rendering Pickup-Options React Component
-                        const element = document.getElementById("bopis");
-                        const root = createRoot(element,);
-            
-                        // Initial render
-                        root.render(<PickupOptions line={{lat: 25.60, lng:-80.13, productId: productId, variantId: variantId, quantity: self.getProductQty()}} />);
-                                
-                    }); 
+                   
+                    setTimeout(() => {
+                 
+                        utils.api.productAttributes.optionChange(productId, $form.serialize(), 'products/bulk-discount-rates', (err, response) => {
+                            const variantId = response.data.v3_variant_id; 
+                           //Rendering Pickup-Options React Component
+                           const element = document.getElementById("bopis");
+                           const root = createRoot(element,);
+               
+                           // Initial render
+                           root.render(<PickupOptions line={{lat: 25.60, lng:-80.13, productId: productId, variantId: variantId, quantity: self.getProductQty()}} />);
+                                   
+                       }); 
+                      }, "2000");
+                   
                     
                    
                 }

@@ -438,6 +438,10 @@
             "label": "i18n.ShowProductsInAGrid"
           },
           {
+            "value": "table",
+            "label": "i18n.ShowProductsInATable"
+          },
+          {
             "value": "list",
             "label": "i18n.ShowProductsInAList"
           }
@@ -478,6 +482,12 @@
         "content": "i18n.PurchaseOptions"
       },
       {
+        "type": "checkbox",
+        "label": "i18n.HidePurchaseOptionsPriceAnd",
+        "force_reload": true,
+        "id": "restrict_to_login"
+      },
+      {
         "type": "heading",
         "content": "i18n.FormInputFields"
       },
@@ -510,6 +520,15 @@
         "type": "color",
         "label": "i18n.FieldBorderActive",
         "id": "input-border-color-active"
+      },
+      {
+        "type": "heading",
+        "content": "i18n.AdminBar"
+      },
+      {
+        "type": "checkbox",
+        "label": "i18n.ShowAdminBar",
+        "id": "show-admin-bar"
       }
     ]
   },
@@ -796,31 +815,15 @@
       },
       {
         "type": "checkbox",
-        "label": "i18n.ShowSocialMediaIcons",
+        "label": "i18n.ShowSocialMediaIconsHeader",
         "force_reload": true,
-        "id": "social_icon_placement_top"
+        "id": "social_icon_placement_header"
       },
       {
-        "type": "select",
-        "label": "i18n.FooterPlacement",
-        "id": "social_icon_placement_bottom",
-        "force_reload": true,
-        "reference": "social_icon_placement_top",
-        "reference_default": false,
-        "options": [
-          {
-            "value": "bottom_none",
-            "label": "i18n.None"
-          },
-          {
-            "value": "bottom_right",
-            "label": "i18n.Right"
-          },
-          {
-            "value": "bottom_left",
-            "label": "i18n.Left"
-          }
-        ]
+        "type": "checkbox",
+        "label": "i18n.ShowSocialMediaIconsFooter",
+        "id": "social_icon_placement_footer",
+        "force_reload": true
       },
       {
         "type": "heading",
@@ -830,6 +833,45 @@
         "type": "color",
         "label": "i18n.FooterBackground",
         "id": "footer-backgroundColor"
+      },
+      {
+        "type": "color",
+        "label": "i18n.ttFooterHeading",
+        "id": "footer-heading-fontColor"
+      },
+      {
+        "type": "color",
+        "label": "i18n.ttFooterLinks",
+        "id": "tt-footer-links-fontColor"
+      },
+      {
+        "type": "color",
+        "label": "i18n.ttFooterLinksHover",
+        "id": "tt-footer-links-fontColor--hover"
+      },
+      {
+        "type": "color",
+        "label": "i18n.ttFooterText",
+        "id": "tt-footer-text-fontColor"
+      },
+      {
+        "type": "heading",
+        "content": "i18n.ttFooterBottom"
+      },
+      {
+        "type": "color",
+        "label": "i18n.ttFooterBottomBackground",
+        "id": "tt-footer-bottom-backgroundColor"
+      },
+      {
+        "type": "color",
+        "label": "i18n.ttFooterBottomTextColor",
+        "id": "tt-footer-bottom-textColor"
+      },
+      {
+        "type": "color",
+        "label": "i18n.ttFooterBottomBorderColor",
+        "id": "tt-footer-bottom-borderColor"
       },
       {
         "type": "heading",
@@ -849,9 +891,63 @@
       },
       {
         "type": "checkbox",
+        "label": "i18n.ttShowCategoriesInFooter",
+        "force_reload": true,
+        "id": "tt_categories_show_footer"
+      },
+      {
+        "type": "checkbox",
+        "label": "i18n.ttShowPagesInFooter",
+        "force_reload": true,
+        "id": "tt_pages_show_footer"
+      },
+      {
+        "type": "checkbox",
+        "label": "i18n.ttShowCustomColumnOneInFooter",
+        "force_reload": true,
+        "id": "tt_custom_column_one_show_footer"
+      },
+      {
+        "type": "checkbox",
+        "label": "i18n.ttShowCustomColumnTwoInFooter",
+        "force_reload": true,
+        "id": "tt_custom_column_two_show_footer"
+      },
+      {
+        "type": "checkbox",
+        "label": "i18n.ttShowCustomColumnThreeInFooter",
+        "force_reload": true,
+        "id": "tt_custom_column_three_show_footer"
+      },
+      {
+        "type": "checkbox",
+        "label": "i18n.ttShowCustomColumnFourInFooter",
+        "force_reload": true,
+        "id": "tt_custom_column_four_show_footer"
+      },
+      {
+        "type": "checkbox",
+        "label": "i18n.ttShowAddressInFooter",
+        "force_reload": true,
+        "id": "tt_address_show_footer"
+      },
+      {
+        "type": "checkbox",
+        "label": "i18n.ttShowPhoneInFooter",
+        "force_reload": true,
+        "id": "tt_phone_show_footer"
+      },
+      {
+        "type": "checkbox",
         "label": "i18n.ShowCurrentYearAnd",
         "force_reload": true,
         "id": "show_copyright_footer"
+      },
+      {
+        "type": "checkbox",
+        "label": "i18n.ttFooterCopy",
+        "force_reload": true,
+        "id": "tt_footer_copyright"
       },
       {
         "type": "heading",
@@ -898,6 +994,25 @@
         "label": "i18n.ShowGooglePay",
         "force_reload": true,
         "id": "show_accept_googlepay"
+      },
+      {
+        "type": "select",
+        "label": "i18n.ApplePayColor",
+        "id": "applePay-button",
+        "options": [
+          {
+            "value": "black",
+            "label": "i18n.BlackWhiteText"
+          },
+          {
+            "value": "white",
+            "label": "i18n.WhiteBlackText"
+          },
+          {
+            "value": "white-border",
+            "label": "i18n.WhiteBlackTextWithBorder"
+          }
+        ]
       },
       {
         "type": "checkbox",
@@ -1343,6 +1458,22 @@
       },
       {
         "type": "heading",
+        "content": "Sticky Add To Cart"
+      },
+      {
+        "type": "checkbox",
+        "label": "Enable Sticky Add To Cart",
+        "id": "halo_sticky_add_to_cart",
+        "force_reload": true
+      },
+      {
+        "type": "checkbox",
+        "label": "Show Custom Layout Mobile",
+        "id": "halo_product_template_mobile",
+        "force_reload": true
+      },
+      {
+        "type": "heading",
         "content": "i18n.DisplaySettings"
       },
       {
@@ -1350,6 +1481,12 @@
         "label": "i18n.ShowQuickviewButtonOnProduct",
         "force_reload": true,
         "id": "show_product_quick_view"
+      },
+      {
+        "type": "checkbox",
+        "label": "i18n.ShowQuantitySelectionOnProduct",
+        "force_reload": true,
+        "id": "show_product_quantity_box"
       },
       {
         "type": "checkbox",
@@ -1463,12 +1600,6 @@
         "type": "color",
         "label": "i18n.WishlistDropdownBackground",
         "id": "dropdown--wishList-backgroundColor"
-      },
-      {
-        "type": "checkbox",
-        "label": "i18n.ShowQuickPaymentButtons",
-        "force_reload": true,
-        "id": "show_quick_payment_buttons"
       },
       {
         "type": "heading",
@@ -2786,171 +2917,21 @@
     "enable": "smartButtons",
     "settings": [
       {
-        "type": "heading",
-        "content": "i18n.PaymentButtonsContainer"
-      },
-      {
-        "type": "select",
-        "label": "i18n.ButtonContainer",
+        "type": "checkbox",
+        "label": "i18n.ShowPayPalTagline",
         "force_reload": true,
-        "id": "paymentbuttons-container",
-        "options": [
-          {
-            "value": "small",
-            "label": "Small"
-          },
-          {
-            "value": "medium",
-            "label": "Medium"
-          },
-          {
-            "value": "large",
-            "label": "Large"
-          }
-        ]
+        "id": "paymentbuttons-paypal-tagline"
       },
       {
-        "type": "heading",
-        "content": "i18n.QuickPaymentButtons"
-      },
-      {
-        "type": "select",
-        "label": "i18n.NumberOfButtonsAlwaysVisible",
+        "type": "checkbox",
+        "label": "i18n.ShowFundingIcons",
         "force_reload": true,
-        "id": "paymentbuttons-number-of-buttons",
-        "options": [
-          {
-            "value": 1,
-            "label": "1"
-          },
-          {
-            "value": 2,
-            "label": "2"
-          }
-        ]
-      },
-      {
-        "type": "sort",
-        "label": "i18n.ProviderSortingOrderLabel",
-        "id": "paymentbuttons-provider-sorting",
-        "force_reload": true,
-        "options": [
-          {
-            "value": "paypal",
-            "label": "i18n.PayPalProviderSortingLabel",
-            "enabledBy": "paypal"
-          },
-          {
-            "value": "paypal-credit",
-            "label": "i18n.PayPalCreditProviderSortingLabel",
-            "enabledBy": "paypal-credit"
-          },
-          {
-            "value": "paypal-venmo",
-            "label": "i18n.PayPalVenmoProviderSortingLabel",
-            "enabledBy": "paypal-venmo"
-          },
-          {
-            "value": "sepa",
-            "label": "i18n.PayPalSepaProviderSortingLabel",
-            "enabledBy": "sepa"
-          },
-          {
-            "value": "googlepay",
-            "label": "i18n.GooglepayProviderSortingLabel",
-            "enabledBy": "googlepay"
-          },
-          {
-            "value": "applepay",
-            "label": "i18n.ApplepayProviderSortingLabel",
-            "enabledBy": "applepay"
-          },
-          {
-            "value": "afterpay",
-            "label": "i18n.AfterpayProviderSortingLabel",
-            "enabledBy": "afterpay"
-          },
-          {
-            "value": "amazonpay",
-            "label": "i18n.AmazonProviderSortingLabel",
-            "enabledBy": "amazonpay"
-          },
-          {
-            "value": "masterpass",
-            "label": "i18n.MasterpassProviderSortingLabel",
-            "enabledBy": "masterpass"
-          }
-        ]
-      },
-      {
-        "type": "heading",
-        "content": "i18n.PaypalAcceleratedCheckoutButton",
-        "enable": "payPalAcceleratedCheckoutEnabled"
-      },
-      {
-        "type": "color",
-        "label": "i18n.ButtonColor",
-        "id": "paymentbuttons-paypal-accelerated-checkout-color",
-        "enable": "payPalAcceleratedCheckoutEnabled"
-      },
-      {
-        "type": "color",
-        "label": "i18n.ContentColor",
-        "id": "paymentbuttons-paypal-accelerated-content-color",
-        "enable": "payPalAcceleratedCheckoutEnabled"
-      },
-      {
-        "type": "select",
-        "label": "i18n.ButtonContent",
-        "id": "paymentbuttons-paypal-accelerated-content-label",
-        "enable": "payPalAcceleratedCheckoutEnabled",
-        "options": [
-          {
-            "value": "buy",
-            "label": "i18n.Buy"
-          },
-          {
-            "value": "checkout",
-            "label": "i18n.Checkout"
-          },
-          {
-            "value": "pay",
-            "label": "i18n.Pay"
-          },
-          {
-            "value": "buynow",
-            "label": "i18n.BuyNow"
-          },
-          {
-            "value": "paynow",
-            "label": "i18n.PayNow"
-          },
-          {
-            "value": "checkoutnow",
-            "label": "i18n.CheckoutNow"
-          },
-          {
-            "value": "proceedtocheckout",
-            "label": "i18n.ProceedToCheckout"
-          }
-        ]
-      },
-      {
-        "type": "color",
-        "label": "i18n.BorderColor",
-        "id": "paymentbuttons-paypal-accelerated-border-color",
-        "enable": "payPalAcceleratedCheckoutEnabled"
-      },
-      {
-        "type": "heading",
-        "content": "i18n.SmartPaypalButton",
-        "enable": "payPalProvidersEnabled"
+        "id": "paymentbuttons-paypal-fundingicons"
       },
       {
         "type": "select",
         "label": "i18n.ButtonColor",
         "id": "paymentbuttons-paypal-color",
-        "enable": "payPalProvidersEnabled",
         "force_reload": true,
         "options": [
           {
@@ -2979,7 +2960,6 @@
         "type": "select",
         "label": "i18n.ButtonShape",
         "id": "paymentbuttons-paypal-shape",
-        "enable": "payPalProvidersEnabled",
         "force_reload": true,
         "options": [
           {
@@ -2994,9 +2974,32 @@
       },
       {
         "type": "select",
+        "label": "i18n.ButtonSize",
+        "id": "paymentbuttons-paypal-size",
+        "force_reload": true,
+        "options": [
+          {
+            "value": "small",
+            "label": "i18n.Small"
+          },
+          {
+            "value": "medium",
+            "label": "i18n.Medium"
+          },
+          {
+            "value": "large",
+            "label": "i18n.Large"
+          },
+          {
+            "value": "responsive",
+            "label": "i18n.Responsive"
+          }
+        ]
+      },
+      {
+        "type": "select",
         "label": "i18n.ButtonContent",
         "id": "paymentbuttons-paypal-label",
-        "enable": "payPalProvidersEnabled",
         "force_reload": true,
         "options": [
           {
@@ -3018,15 +3021,29 @@
         ]
       },
       {
+        "type": "select",
+        "label": "i18n.DisplayStyle",
+        "id": "paymentbuttons-paypal-layout",
+        "force_reload": true,
+        "options": [
+          {
+            "value": "horizontal",
+            "label": "i18n.ShowButtonsHorizontally"
+          },
+          {
+            "value": "vertical",
+            "label": "i18n.ShowButtonsVertically"
+          }
+        ]
+      },
+      {
         "type": "heading",
-        "content": "i18n.CheckoutPayPalButton",
-        "enable": "payPalProvidersEnabled"
+        "content": "i18n.CheckoutPayPalButton"
       },
       {
         "type": "select",
         "label": "i18n.ButtonColor",
         "id": "checkout-paymentbuttons-paypal-color",
-        "enable": "payPalProvidersEnabled",
         "force_reload": true,
         "options": [
           {
@@ -3055,7 +3072,6 @@
         "type": "select",
         "label": "i18n.ButtonShape",
         "id": "checkout-paymentbuttons-paypal-shape",
-        "enable": "payPalProvidersEnabled",
         "force_reload": true,
         "options": [
           {
@@ -3072,7 +3088,6 @@
         "type": "select",
         "label": "i18n.ButtonSize",
         "id": "checkout-paymentbuttons-paypal-size",
-        "enable": "payPalProvidersEnabled",
         "force_reload": true,
         "options": [
           {
@@ -3093,7 +3108,6 @@
         "type": "select",
         "label": "i18n.ButtonContent",
         "id": "checkout-paymentbuttons-paypal-label",
-        "enable": "payPalProvidersEnabled",
         "force_reload": true,
         "options": [
           {
@@ -3111,127 +3125,6 @@
           {
             "value": "paypal",
             "label": "i18n.PayPal"
-          }
-        ]
-      },
-      {
-        "type": "heading",
-        "content": "i18n.GooglePaySettings",
-        "enable": "googleProvidersEnabled"
-      },
-      {
-        "type": "select",
-        "label": "i18n.ButtonColor",
-        "id": "googlepay-button-color",
-        "enable": "googleProvidersEnabled",
-        "options": [
-          {
-            "value": "black",
-            "label": "i18n.BlackWhiteText"
-          },
-          {
-            "value": "white",
-            "label": "i18n.WhiteBlackText"
-          }
-        ]
-      },
-      {
-        "type": "heading",
-        "content": "i18n.ApplePaySettings",
-        "enable": "appleProvidersEnabled"
-      },
-      {
-        "type": "select",
-        "label": "i18n.ButtonColor",
-        "id": "applePay-button",
-        "enable": "appleProvidersEnabled",
-        "options": [
-          {
-            "value": "black",
-            "label": "i18n.BlackWhiteText"
-          },
-          {
-            "value": "white",
-            "label": "i18n.WhiteBlackText"
-          },
-          {
-            "value": "white-border",
-            "label": "i18n.WhiteBlackTextWithBorder"
-          }
-        ]
-      },
-      {
-        "type": "heading",
-        "content": "i18n.AfterPaySettings",
-        "enable": "afterpayProvidersEnabled"
-      },
-      {
-        "type": "select",
-        "label": "i18n.ButtonColor",
-        "id": "afterpay-button-color",
-        "enable": "afterpayProvidersEnabled",
-        "options": [
-          {
-            "value": "black-mint",
-            "label": "i18n.BlackOnMintText"
-          },
-          {
-            "value": "mint-black",
-            "label": "i18n.MintOnBlackText"
-          },
-          {
-            "value": "white",
-            "label": "i18n.BlackWhiteText"
-          },
-          {
-            "value": "black",
-            "label": "i18n.WhiteBlackText"
-          }
-        ]
-      },
-      {
-        "type": "heading",
-        "content": "i18n.AmazonSettings",
-        "enable": "amazonProvidersEnabled"
-      },
-      {
-        "type": "select",
-        "label": "i18n.ButtonColor",
-        "id": "amazon-button-color",
-        "enable": "amazonProvidersEnabled",
-        "options": [
-          {
-            "value": "Gold",
-            "label": "i18n.Gold"
-          },
-          {
-            "value": "LightGray",
-            "label": "i18n.LightGray"
-          },
-          {
-            "value": "DarkGray",
-            "label": "i18n.DarkGray"
-          }
-        ]
-      },
-      {
-        "type": "heading",
-        "content": "i18n.MasterpassSettings",
-        "enable": "masterpassProvidersEnabled"
-      },
-      {
-        "type": "select",
-        "label": "i18n.ButtonColor",
-        "id": "masterpass-button-color",
-        "enable": "masterpassProvidersEnabled",
-        "options": [
-          {
-            "value": "black",
-            "label": "i18n.BlackWhiteText"
-          },
-          {
-            "value": "white",
-            "label": "i18n.WhiteBlackText"
           }
         ]
       }
