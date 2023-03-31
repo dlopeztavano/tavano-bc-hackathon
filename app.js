@@ -66,15 +66,15 @@ async function buildOrderInBc(checkout_session_completed)
 
   var locationId = checkout_session_completed.metadata.locationId || 2;
 
-  var customerId = checkout_session_completed.metadata.customerId ;
+  var customerId = checkout_session_completed.metadata.customerId || 107 ;
 
-  var fullCheckoutSession = await getFullCheckoutSessionDataFromStripe();
+  var productId = checkout_session_completed.metadata.customerId || 81;
+
+  var fullCheckoutSession = await getFullCheckoutSessionDataFromStripe(checkout_session_completed.id);
 
   
 
-
-
-  // var fullPaymentIntent = await getFullPaymentIntent(fullCheckoutSession.payment_intent);
+  
 
 
   // Building some default billing just for local hooks triggers
@@ -217,12 +217,12 @@ async function getFullPaymentIntent(payment_intent){
 }
 
 
-async function getFullCheckoutSessionDataFromStripe(){
+async function getFullCheckoutSessionDataFromStripe(id){
 
   var checkout_session ;
 
   await stripe.checkout.sessions.retrieve(
-    'cs_test_a1ja4qCTTXqk3Ta8vnnziyJvVsf3wF6WtqbDcbXgAMOCi3YezpnzY0tXJH',{
+    id,{
       expand:["line_items"]
     }).then((body) => {
     
@@ -270,7 +270,8 @@ async function getStripeCheckoutSession(productId,qty,locationId,customerId){
     mode: 'payment',
     metadata:{
       "locationId":locationId,
-      "customerId":customerId
+      "customerId":customerId,
+      "productId":productId
     },
     billing_address_collection:"required"
 
@@ -288,8 +289,8 @@ async function buildStripeSession(req,res){
 
   var productId = req.query.productId || 81;
   var qty = req.query.qty || 1;
-  var locationId = req.query.locationId;
-  var customerId = req.query.customerId;
+  var locationId = req.query.locationId || 2;
+  var customerId = req.query.customerId || 107;
 
   if (productId){
 
