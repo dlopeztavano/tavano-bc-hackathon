@@ -70,7 +70,7 @@ async function buildOrderInBc(checkout_session_completed)
 
   var customerId = checkout_session_completed.metadata.customerId || 107 ;
 
-  var productId = checkout_session_completed.metadata.customerId || 81;
+  var productId = parseInt(checkout_session_completed.metadata.customerId || 81);
 
   var fullCheckoutSession = await getFullCheckoutSessionDataFromStripe(checkout_session_completed.id);
 
@@ -95,7 +95,7 @@ async function buildOrderInBc(checkout_session_completed)
   
   var billing_address;
 
-  if (checkout_session_completed && checkout_session_completed.customer_details && false ){
+  if (checkout_session_completed && checkout_session_completed.customer_details ){
 
     billing_address = {
       "first_name":checkout_session_completed.customer_details.name || checkout_session_completed.customer_details.email,
