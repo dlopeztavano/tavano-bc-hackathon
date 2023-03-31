@@ -32,7 +32,7 @@ module.exports = {
                                 modules: false, // Don't transform modules; needed for tree-shaking
                                 useBuiltIns: 'entry',
                                 corejs: '^3.6.5',
-                            }],
+                            }]
                         ],
                     },
                 },
@@ -44,6 +44,25 @@ module.exports = {
                   exposes: ["$"],
                 },
             },
+            {
+                test: /\.jsx$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: "babel-loader",
+                        options: {
+                            presets: ["@babel/preset-react"],
+                        },
+                     }
+            },
+            {
+                test: /\.(png|jpe?g|gif)$/i,
+                use: [
+                  {
+                    loader: 'file-loader',
+                  },
+                ],
+            },
+           
         ],
     },
     output: {

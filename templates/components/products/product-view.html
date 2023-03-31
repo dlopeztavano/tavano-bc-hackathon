@@ -247,6 +247,12 @@
                         <span data-product-stock>{{product.stock_level}}</span>
                     </label>
                 </div>
+                <div class="pickup-section">
+                    <h3>Pick up in-store</h3>
+
+                    <div id="stripe">
+                    <div id="bopis" class="pickup-options">
+                </div>
                 {{> components/products/add-to-cart with_wallet_buttons=true}}
                 {{#if product.out_of_stock}}
                     {{#if product.out_of_stock_message}}

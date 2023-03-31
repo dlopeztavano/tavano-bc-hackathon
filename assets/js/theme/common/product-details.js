@@ -13,10 +13,23 @@ import { isBrowserIE, convertIntoArray } from './utils/ie-helpers';
 import bannerUtils from './utils/banner-utils';
 import currencySelector from '../global/currency-selector';
 
+
+//BOPIS
+import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client';
+import React from 'react';
+import PickupOptions from '../custom/pickup-options/pickup-options.jsx';
+import { Badge } from '@bigcommerce/big-design';
+
 export default class ProductDetails extends ProductDetailsBase {
     constructor($scope, context, productAttributesData = {}) {
         super($scope, context);
 
+ 
+        console.log(context)
+        
+        this.lat = null;
+        this.lng = null;
         this.$overlay = $('[data-cart-item-add] .loadingOverlay');
         this.imageGallery = new ImageGallery($('[data-image-gallery]', this.$scope));
         this.imageGallery.init();
@@ -106,7 +119,37 @@ export default class ProductDetails extends ProductDetailsBase {
         $productOptionsElement.show();
 
         this.previewModal = modalFactory('#previewModal')[0];
+
+
+        //BOPIS initialization
+        if (navigator.geolocation) {
+            var self = this;
+            navigator.geolocation.getCurrentPosition(function (position) {
+               
+                if (position) {
+                    self.lat = position.coords.latitude;
+                    self.lng = position.coords.longitude; 
+                    
+                    const productId = parseInt($('[name="product_id"]', $form).val());
+                    utils.api.productAttributes.optionChange(productId, $form.serialize(), '', (err, response) => {
+                         const variantId = response.data.v3_variant_id; 
+                        //Rendering Pickup-Options React Component
+                        const element = document.getElementById("bopis");
+                        const root = createRoot(element,);
+            
+                        // Initial render
+                        root.render(<PickupOptions line={{lat: 25.60, lng:-80.13, productId: productId, variantId: variantId, quantity: self.getProductQty()}} />);
+                                
+                    }); 
+                    
+                   
+                }
+            });
+        }else {
+            alert("Geolocation is not supported by this browser.");
+        }
     }
+
 
     registerAddToCartValidation() {
         this.addToCartValidator.add([{
@@ -231,6 +274,7 @@ export default class ProductDetails extends ProductDetailsBase {
                 card.attr('data-product-variant', productVariant);
             }
         }
+
     }
 
     /**
@@ -261,6 +305,8 @@ export default class ProductDetails extends ProductDetailsBase {
         }
 
         utils.api.productAttributes.optionChange(productId, $form.serialize(), 'products/bulk-discount-rates', (err, response) => {
+            console.log(response.data)
+            const variantId = response.data.v3_variant_id; 
             const productAttributesData = response.data || {};
             const productAttributesContent = response.content || {};
             this.updateProductAttributes(productAttributesData);
@@ -268,11 +314,20 @@ export default class ProductDetails extends ProductDetailsBase {
             this.updateProductDetailsData();
             bannerUtils.dispatchProductBannerEvent(productAttributesData);
 
-            if (!this.checkIsQuickViewChild($form)) {
+            if (!this.checkIsQuickViewChild($form)) {  
                 const $context = $form.parents('.productView').find('.productView-info');
                 modalFactory('[data-reveal]', { $context });
             }
-        });
+
+            
+        }); 
+    }
+
+    getProductQty(){
+        const viewModel = this.getViewModel(this.$scope);
+        const $input = viewModel.quantity.$input;
+        let qty = forms.numbersOnly($input.val()) ? parseInt($input.val(), 10) : 1;
+        return qty;
     }
 
     /**
@@ -393,6 +448,8 @@ export default class ProductDetails extends ProductDetailsBase {
      *
      */
     addProductToCart(event, form) {
+
+        console.log(form)
         const $addToCartBtn = $('#form-action-addToCart', $(event.target));
         const originalBtnVal = $addToCartBtn.val();
         const waitMessage = $addToCartBtn.data('waitMessage');
@@ -411,8 +468,12 @@ export default class ProductDetails extends ProductDetailsBase {
 
         this.$overlay.show();
 
+        console.log(normalizeFormData(new FormData(form)))
+
         // Add item to cart
         utils.api.cart.itemAdd(normalizeFormData(new FormData(form)), (err, response) => {
+
+            console.log(response.data)
             currencySelector(response.data.cart_id);
             const errorMessage = err || response.data.error;
 

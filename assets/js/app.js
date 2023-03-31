@@ -1,10 +1,15 @@
 __webpack_public_path__ = window.__webpack_public_path__; // eslint-disable-line
 
 import Global from './theme/global';
+import { Button, GlobalStyles } from '@bigcommerce/big-design';
 
 const getAccount = () => import('./theme/account');
 const getLogin = () => import('./theme/auth');
 const noop = null;
+
+
+import React from 'react';
+import ReactDOM from 'react-dom';
 
 const pageClasses = {
     account_orderstatus: getAccount,
@@ -96,3 +101,5 @@ window.stencilBootstrap = function stencilBootstrap(pageType, contextJSON = null
         },
     };
 };
+
+
