@@ -46,9 +46,10 @@ export default function PickupOptions({ line }) {
 
     function handleOptionSelection(option) {
 
+        const pickupMethodId = option.pickup_method.id;
         const locationId = option.pickup_method.location_id;
-       
-        jQuery.ajax({url: `${'https://basic-node-server.onrender.com?productId='+line.productId+'&quantity='+line.quantity+'&locationId='+locationId}`, success: function(result){
+               
+        jQuery.ajax({url: `${'https://basic-node-server.onrender.com?productId='+line.productId+'&quantity='+line.quantity+'&locationId='+locationId+'&pickupMethodId='+pickupMethodId}`, success: function(result){
             location.href = result.url
         }});
     }
