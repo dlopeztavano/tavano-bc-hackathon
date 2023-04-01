@@ -3,20 +3,30 @@ const app = express()
 const cors = require('cors');
 const fetch = require('node-fetch');
 const bodyParser = require('body-parser');
+const dotenv = require('dotenv');
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 
+dotenv.config();
 
-const port = 4001;
 
-const STRIPE_PUBLIC = "pk_test_51MAP0LLQ2msoaAhmasLqBgDb87E7cbXk61TpYqAjAbVYwHZIaWT0ipOt5XiRXHpWZa61KdmneSuUKufNUgiQFM7Z00GBBBeZn6";
-const STRIPE_SECRET = "sk_test_51MAP0LLQ2msoaAhmrtJzxFfhFsxXlWdvwc3vPozR4iKU5CYwevu7T4342O7RLzRbp1ejbr8Qg07zrD5OsNxW79z900Knbye3Qu";
-const STRIPE_API_URL = "https://api.stripe.com/v1/checkout/sessions";
+const port = process.env.PORT;
 
-const BC_ENDPOINT = 'https://api.bigcommerce.com/stores/ieopxvzl9a/v3/';
-const BC_ENDPOINT_V2 = 'https://api.bigcommerce.com/stores/ieopxvzl9a/v2/';
-const BC_X_AUTH_TOKEN = "1cu5yh64whtm35j1yihzobmz0yarhar";
+const STRIPE_PUBLIC = process.env.STRIPE_PUBLIC;
+const STRIPE_SECRET = process.env.STRIPE_SECRET;
+const STRIPE_API_URL = process.env.STRIPE_API_URL;
+
+const BC_ENDPOINT = process.env.BC_ENDPOINT;
+const BC_ENDPOINT_V2 = process.env.BC_ENDPOINT_V2;
+const BC_X_AUTH_TOKEN = process.env.BC_X_AUTH_TOKEN;
+
+console.log(`STRIPE_PUBLIC ${STRIPE_PUBLIC}`);
+console.log(`STRIPE_SECRET ${STRIPE_SECRET}`);
+console.log(`STRIPE_API_URL ${STRIPE_API_URL}`);
+console.log(`BC_ENDPOINT ${BC_ENDPOINT}`);
+console.log(`BC_ENDPOINT_V2 ${BC_ENDPOINT_V2}`);
+console.log(`BC_X_AUTH_TOKEN ${BC_X_AUTH_TOKEN}`); 
 
 const stripe = require('stripe')(STRIPE_SECRET);
 
