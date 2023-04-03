@@ -295,7 +295,7 @@ async function getStripeCheckoutSession(productId,qty,locationId,customerId){
   var checkout_session ;
 
   await stripe.checkout.sessions.create({
-    success_url: 'https://example.com/success',
+    success_url: 'https://sinbi-store.mybigcommerce.com/orbit-terrarium-small/',
     line_items: [
       {price: 'price_1MrnK0LQ2msoaAhmqlUmdn0s', quantity: qty},
     ],
