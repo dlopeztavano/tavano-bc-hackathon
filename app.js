@@ -21,12 +21,17 @@ const BC_ENDPOINT = process.env.BC_ENDPOINT;
 const BC_ENDPOINT_V2 = process.env.BC_ENDPOINT_V2;
 const BC_X_AUTH_TOKEN = process.env.BC_X_AUTH_TOKEN;
 
+const BC_GRAPHQL_URL = process.env.BC_GRAPHQL_URL;
+const BC_STOREFRONT_GRAPHQL_TOKEN = process.env.BC_STOREFRONT_GRAPHQL_TOKEN;
+
 console.log(`STRIPE_PUBLIC ${STRIPE_PUBLIC}`);
 console.log(`STRIPE_SECRET ${STRIPE_SECRET}`);
 console.log(`STRIPE_API_URL ${STRIPE_API_URL}`);
 console.log(`BC_ENDPOINT ${BC_ENDPOINT}`);
 console.log(`BC_ENDPOINT_V2 ${BC_ENDPOINT_V2}`);
 console.log(`BC_X_AUTH_TOKEN ${BC_X_AUTH_TOKEN}`); 
+console.log(`BC_GRAPHQL_URL ${BC_GRAPHQL_URL}`);
+console.log(`BC_STOREFRONT_GRAPHQL_TOKEN ${BC_STOREFRONT_GRAPHQL_TOKEN}`); 
 
 const stripe = require('stripe')(STRIPE_SECRET);
 
@@ -388,7 +393,7 @@ app.post('/createPickupOptions', (req, res) => {
   
   console.log('create pickup options endpoint');
 
-  let url = `${BC_ENDPOINT}pickup/options`
+  let url = `${BC_ENDPOINT}pickup/options`;
 
   console.log(JSON.stringify(req.body));
 
@@ -414,7 +419,92 @@ app.post('/createPickupOptions', (req, res) => {
       if(responseObject && responseObject.results && (responseObject.results.length > 0) && responseObject.results[0].pickup_options){
         console.log('There are results & pickup_options');
         //res.end(JSON.stringify(responseObject.results[0].pickup_options));
-        res.status(200).json(responseObject.results[0].pickup_options);
+
+		let pickupOptions = responseObject.results[0].pickup_options;
+		const locationIds = pickupOptions.map((pickup_option) => {
+			console.log(`location_id: ${JSON.stringify(pickup_option.pickup_method.location_id)}`);
+			return pickup_option.pickup_method.location_id;
+		});
+
+		console.log(`locationIds: ${JSON.stringify(locationIds)}`);
+
+		let query_locations = 
+
+		`query($entityIds:[Int!] ) {
+			inventory {
+			  locations(entityIds: $entityIds ) {
+				edges {
+				  node {
+					entityId
+					code
+					label
+					description
+					typeId
+					timeZone
+					address {
+					  city
+					  address1
+					  address2
+					  postalCode
+					  stateOrProvince
+					  email
+					  phone
+					  latitude
+					  longitude
+					  countryCode
+					}
+				  }
+				}
+			  }
+			}
+		}`;
+
+        let responseLocations = fetch(BC_GRAPHQL_URL, {
+          method: 'POST',
+          headers: {
+			'Authorization': 'Bearer ' + BC_STOREFRONT_GRAPHQL_TOKEN,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            query: query_locations,
+            variables: {
+				entityIds: locationIds
+            },
+          }),
+        });
+
+		responseLocations
+		.then(function(res) { return res.json() })
+		.then(function(response) { 
+			console.log(`location graphql response: ${JSON.stringify(response)}`);
+
+			if(response && response.data && response.data.inventory && response.data.inventory.locations && response.data.inventory.locations.edges){
+				const locationEdges = response.data.inventory.locations.edges;
+
+				for(let i=0; i< locationEdges.length; i++){
+					const locationEdge = locationEdges[i];
+					const locationEdgeId = locationEdge.node.entityId;
+
+					for(let j=0; j < pickupOptions.length; j++ ){
+						const pickupOptionElement = pickupOptions[j];
+
+						if(pickupOptionElement.pickup_method.location_id == locationEdgeId){
+							pickupOptions[j].pickup_method.address = locationEdge.node.address;
+						}
+
+					}
+				}
+
+				res.status(200).json(pickupOptions); 
+			}else{
+				res.status(200).json(pickupOptions); 
+			}
+
+			
+			
+		});
+
+        
       }else{
         //res.end(responseText);
         res.status(200).json(responseText);
