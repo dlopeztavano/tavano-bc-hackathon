@@ -144,7 +144,7 @@ export default class ProductDetails extends ProductDetailsBase {
                            root.render(<PickupOptions line={{lat: 25.60, lng:-80.13, productId: productId, variantId: variantId, quantity: self.getProductQty()}} />);
                                    
                        }); 
-                      }, "2000");
+                      }, "1000");
                    
                     
                    
