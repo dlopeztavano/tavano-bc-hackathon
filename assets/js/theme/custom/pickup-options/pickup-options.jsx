@@ -74,6 +74,15 @@ export default function PickupOptions({ line }) {
                         <Text>
                             {option.pickup_method.collection_instructions}
                         </Text>
+                        <Text>
+                            {option.pickup_method.address.address1}
+                        </Text>
+                        <Text>
+                        {option.pickup_method.address.city}, {option.pickup_method.address.city.stateOrProvince} {option.pickup_method.address.postalCode}
+                        </Text>
+                        <Text>
+                            Phone: {option.pickup_method.address.phone}
+                        </Text>
                     </Panel>
                 </div>
             ))}
