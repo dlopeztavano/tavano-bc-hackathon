@@ -141,7 +141,7 @@ export default class ProductDetails extends ProductDetailsBase {
                            const root = createRoot(element,);
                
                            // Initial render
-                           root.render(<PickupOptions line={{lat: 25.60, lng:-80.13, productId: productId, variantId: variantId, quantity: self.getProductQty()}} />);
+                           root.render(<PickupOptions line={{lat: self.lat, lng:self.lng, productId: productId, variantId: variantId, quantity: self.getProductQty()}} />);
                                    
                        }); 
                       }, "1000");
